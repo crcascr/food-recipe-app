@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, TextInput } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import axios from "axios";
 import Categories from "../components/Categories";
 
 function HomeScreen() {
@@ -20,7 +21,25 @@ function HomeScreen() {
     greetings = "¡Hola Pandi, buenas noches!";
   }
 
-  const [activeCategory,setActiveCategory]=useState(null)
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
+
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        "https://www.themealdb.com/api/json/v1/1/categories.php"
+      );
+      if (response && response.data) {
+        setCategories(response.data.categories);
+      }
+    } catch (error) {
+      console.log("Error al obtener las categorías:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <View className="flex-1 bg-white">
@@ -70,7 +89,12 @@ function HomeScreen() {
         </View>
         {/* Categories */}
         <View>
-          <Categories hP={hp} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
+          <Categories
+            hP={hp}
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            categories={categories}
+          />
         </View>
       </ScrollView>
     </View>

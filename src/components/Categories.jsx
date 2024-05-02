@@ -1,9 +1,9 @@
 import { ScrollView, View } from "react-native";
-import { categoryData } from "../constants";
+//import { categoryData } from "../constants";
 import CategoryElement from "./CategoryElement";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
-function Categories({ hP, activeCategory, setActiveCategory }) {
+function Categories({ hP, activeCategory, setActiveCategory,categories }) {
   return (
     <Animated.View entering={FadeInDown.duration(500).springify()}>
       <ScrollView
@@ -12,12 +12,12 @@ function Categories({ hP, activeCategory, setActiveCategory }) {
         className="space-x-4"
         contentContainerStyle={{ paddingHorizontal: 15 }}
       >
-        {categoryData.map((category, index) => {
+        {categories.map((category, index) => {
           return (
             <CategoryElement
               key={index}
-              name={category.name}
-              image={category.image}
+              name={category.strCategory}
+              image={category.strCategoryThumb}
               hP={hP}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
