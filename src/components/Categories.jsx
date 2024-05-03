@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import CategoryElement from "./CategoryElement";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
-function Categories({ hP, activeCategory, setActiveCategory,categories }) {
+function Categories({ hP, activeCategory, setActiveCategory,categories,handleCategoryChange }) {
   return (
     <Animated.View entering={FadeInDown.duration(500).springify()}>
       <ScrollView
@@ -21,6 +21,7 @@ function Categories({ hP, activeCategory, setActiveCategory,categories }) {
               hP={hP}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
+              handleCategoryChange={handleCategoryChange}
             />
           );
         })}

@@ -6,11 +6,15 @@ function CategoryElement({
   hP,
   activeCategory,
   setActiveCategory,
+  handleCategoryChange,
 }) {
   return (
     <TouchableOpacity
       className="flex items-center space-y-1 mr-2"
-      onPress={() => setActiveCategory(name)}
+      onPress={() => {
+        setActiveCategory(name);
+        handleCategoryChange(name);
+      }}
     >
       <View
         className={`rounded-full p-[6px] ${

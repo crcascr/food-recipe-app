@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,9 +29,10 @@ function HomeScreen() {
     greetings = "¡Hola Pandi, buenas noches!";
   }
 
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("Beef");
   const [categories, setCategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getCategories = async () => {
     try {
@@ -39,23 +47,30 @@ function HomeScreen() {
     }
   };
 
-  const getRecipes = async (category="Beef") => {
+  const getRecipes = async (category = "Beef") => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
       );
       if (response && response.data) {
         setRecipes(response.data.meals);
+        setLoading(false);
       }
-    }catch (error) {
+    } catch (error) {
       console.log("Error al obtener las recetas:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getCategories();
     getRecipes();
   }, []);
+
+  const handleCategoryChange = (category) => {
+    getRecipes(category);
+    setActiveCategory(category);
+  };
 
   return (
     <View className="flex-1 bg-white">
@@ -111,12 +126,17 @@ function HomeScreen() {
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
               categories={categories}
+              handleCategoryChange={handleCategoryChange}
             />
           )}
         </View>
         {/* Recipes */}
         <View>
-          <Recipes categories={categories} recipes={recipes}/>
+          {loading ? (
+            <ActivityIndicator color="#fbbf24" size="large" />
+          ) : (
+            <Recipes categories={categories} recipes={recipes} />
+          )}
         </View>
       </ScrollView>
     </View>
