@@ -8,6 +8,7 @@ import {
 import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import axios from "axios";
 import Categories from "../components/Categories";
+import Recipes from "../components/Recipes";
 
 function HomeScreen() {
   const date = new Date();
@@ -89,12 +90,18 @@ function HomeScreen() {
         </View>
         {/* Categories */}
         <View>
-          <Categories
-            hP={hp}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-            categories={categories}
-          />
+          {categories.length > 0 && (
+            <Categories
+              hP={hp}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              categories={categories}
+            />
+          )}
+        </View>
+        {/* Recipes */}
+        <View>
+          <Recipes categories={categories} />
         </View>
       </ScrollView>
     </View>

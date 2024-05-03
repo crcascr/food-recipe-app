@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 //import { categoryData } from "../constants";
 import CategoryElement from "./CategoryElement";
 import Animated, { FadeInDown } from "react-native-reanimated";
