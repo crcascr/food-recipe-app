@@ -24,6 +24,7 @@ function HomeScreen() {
 
   const [activeCategory, setActiveCategory] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
   const getCategories = async () => {
     try {
@@ -38,8 +39,22 @@ function HomeScreen() {
     }
   };
 
+  const getRecipes = async (category="Beef") => {
+    try {
+      const response = await axios.get(
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+      );
+      if (response && response.data) {
+        setRecipes(response.data.meals);
+      }
+    }catch (error) {
+      console.log("Error al obtener las recetas:", error);
+    }
+  }
+
   useEffect(() => {
     getCategories();
+    getRecipes();
   }, []);
 
   return (
@@ -101,7 +116,7 @@ function HomeScreen() {
         </View>
         {/* Recipes */}
         <View>
-          <Recipes categories={categories} />
+          <Recipes categories={categories} recipes={recipes}/>
         </View>
       </ScrollView>
     </View>

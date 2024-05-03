@@ -7,8 +7,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-function Recipes({ categories }) {
-  return (
+function Recipes({ categories, recipes }) {
+  return recipes.length === 0 ? null : (
     <View className="mx-4 space-y-3">
       <Text
         className="font-semibold text-neutral-600"
@@ -19,8 +19,8 @@ function Recipes({ categories }) {
       <View>
         {categories.length === 0 ? null : (
           <MasonryList
-            data={mealData}
-            keyExtractor={(item) => item.name}
+            data={recipes}
+            keyExtractor={(item) => item.strMeal}
             showsVerticalScrollIndicator={false}
             numColumns={2}
             renderItem={({ item, i }) => (
