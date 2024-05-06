@@ -1,13 +1,17 @@
 import { Text, View } from "react-native";
-import { mealData } from "../constants";
+//import { mealData } from "../constants";
 import MasonryList from "@react-native-seoul/masonry-list";
 import RecipeElement from "./RecipeElement";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 
 function Recipes({ categories, recipes }) {
+
+  const navigation=useNavigation()
+
   return recipes.length === 0 ? null : (
     <View className="mx-4 space-y-3">
       <Text
@@ -25,10 +29,10 @@ function Recipes({ categories, recipes }) {
             numColumns={2}
             renderItem={({ item, i }) => (
               <RecipeElement
-                name={item.strMeal}
-                image={item.strMealThumb}
+                item={item}
                 hP={hp}
                 index={i}
+                navigation={navigation}
               />
             )}
             onEndReachedThreshold={0.1}

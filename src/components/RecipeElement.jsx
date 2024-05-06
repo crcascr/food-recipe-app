@@ -1,8 +1,10 @@
 import { Image, Text, Pressable } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
-function RecipeElement({ name, image, hP, index }) {
+function RecipeElement({ item, hP, index, navigation }) {
   let isEven = index % 2 == 0;
+  const name = item.strMeal;
+  const image = item.strMealThumb;
   return (
     <Animated.View
       entering={FadeInDown.delay(index * 100)
@@ -13,6 +15,7 @@ function RecipeElement({ name, image, hP, index }) {
       <Pressable
         className="flex justify-center mb-4 space-y-1 w-full"
         style={{ paddingLeft: isEven ? 0 : 8, paddingRight: isEven ? 8 : 0 }}
+        onPress={() => navigation.navigate("RecipeDetail", { ...item })}
       >
         <Image
           source={{ uri: image }}

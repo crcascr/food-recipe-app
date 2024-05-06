@@ -16,6 +16,7 @@ import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import axios from "axios";
 import Categories from "../components/Categories";
 import Recipes from "../components/Recipes";
+import Loading from "../components/Loading";
 
 function HomeScreen() {
   const date = new Date();
@@ -133,7 +134,7 @@ function HomeScreen() {
         {/* Recipes */}
         <View>
           {loading ? (
-            <ActivityIndicator color="#fbbf24" size="large" />
+            <Loading color="#fbbf24" size="large" />
           ) : (
             <Recipes categories={categories} recipes={recipes} />
           )}
