@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import Loading from "../components/Loading";
 import Misc from "../components/Misc";
 import YoutubeIframe from "react-native-youtube-iframe";
+import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 
 function RecipeDetailScreen(props) {
   let item = props.route.params;
@@ -99,7 +100,10 @@ function RecipeDetailScreen(props) {
         />
       </View>
       {/* Back button */}
-      <View className="w-full absolute flex-row justify-between items-center pt-10">
+      <Animated.View
+        entering={FadeIn.delay(200).duration(1000)}
+        className="w-full absolute flex-row justify-between items-center pt-10"
+      >
         <TouchableOpacity
           className="p-1 rounded-full ml-3 bg-white"
           onPress={() => navigation.goBack()}
@@ -116,14 +120,17 @@ function RecipeDetailScreen(props) {
             color={liked ? "red" : "gray"}
           />
         </TouchableOpacity>
-      </View>
+      </Animated.View>
       {/* Recipe details */}
       {loading ? (
         <Loading color={"#fbbf24"} size={"large"} />
       ) : (
         <View className="px-4 flex justify-between space-y-4">
           {/* Recipe name and area */}
-          <View className="space-y-2">
+          <Animated.View
+            entering={FadeInDown.duration(700).springify().damping(12)}
+            className="space-y-2"
+          >
             <Text
               style={{ fontSize: hp(3) }}
               className="font-bold flex-1 text-neutral-700"
@@ -136,9 +143,15 @@ function RecipeDetailScreen(props) {
             >
               {recipeDetails?.strArea}
             </Text>
-          </View>
+          </Animated.View>
           {/* Misc */}
-          <View className="flex-row justify-around">
+          <Animated.View
+            entering={FadeInDown.delay(100)
+              .duration(700)
+              .springify()
+              .damping(12)}
+            className="flex-row justify-around"
+          >
             <View className="flex rounded-full bg-amber-300 p-2">
               <View
                 style={{ width: hp(6.5), height: hp(6.5) }}
@@ -179,9 +192,15 @@ function RecipeDetailScreen(props) {
               </View>
               <Misc info="" complement="Facil" hp={hp} />
             </View>
-          </View>
+          </Animated.View>
           {/* Ingredients */}
-          <View className="space-y-4">
+          <Animated.View
+            entering={FadeInDown.delay(200)
+              .duration(700)
+              .springify()
+              .damping(12)}
+            className="space-y-4"
+          >
             <Text
               style={{ fontSize: hp(2.5) }}
               className="font-bold flex-1 text-neutral-700"
@@ -213,9 +232,15 @@ function RecipeDetailScreen(props) {
                 </View>
               ))}
             </View>
-          </View>
+          </Animated.View>
           {/* Instructions */}
-          <View className="space-y-4">
+          <Animated.View
+            entering={FadeInDown.delay(300)
+              .duration(700)
+              .springify()
+              .damping(12)}
+            className="space-y-4"
+          >
             <Text
               style={{ fontSize: hp(2.5) }}
               className="font-bold flex-1 text-neutral-700"
@@ -225,10 +250,16 @@ function RecipeDetailScreen(props) {
             <Text style={{ fontSize: hp(1.6) }} className="text-neutral-700">
               {recipeDetails.strInstructions}
             </Text>
-          </View>
+          </Animated.View>
           {/* Video */}
           {recipeDetails.strYoutube && (
-            <View className="space-y-4">
+            <Animated.View
+              entering={FadeInDown.delay(400)
+                .duration(700)
+                .springify()
+                .damping(12)}
+              className="space-y-4"
+            >
               <Text
                 style={{ fontSize: hp(2.5) }}
                 className="font-bold flex-1 text-neutral-700"
@@ -236,13 +267,12 @@ function RecipeDetailScreen(props) {
                 Video
               </Text>
               <View>
-                
                 <YoutubeIframe
                   videoId={getYoutubeVideoId(recipeDetails.strYoutube)}
                   height={hp(30)}
                 />
               </View>
-            </View>
+            </Animated.View>
           )}
         </View>
       )}
